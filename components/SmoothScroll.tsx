@@ -34,7 +34,7 @@ export const SmoothScroll: React.FC = () => {
                 
                 if (href === '#') return;
                 
-                const element = document.querySelector(href);
+                const element = document.querySelector(href) as HTMLElement;
                 if (element) {
                     // Scroll to element with 100px offset for the fixed navbar
                     lenis.scrollTo(element, { offset: -100 }); 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, BarChart2, Briefcase, Users, TrendingUp } from 'lucide-react';
+import { CheckCircle, Briefcase, TrendingUp } from 'lucide-react';
 
 export const Results: React.FC = () => {
   const stats = [
