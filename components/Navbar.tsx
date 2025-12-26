@@ -6,9 +6,18 @@ export const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -21,19 +30,16 @@ export const Navbar: React.FC = () => {
     { name: 'Contact', href: '#contact' },
   ];
 
-  // Simply close menu; scroll logic is handled by global SmoothScroll component
   const handleNavClick = () => {
     setIsMenuOpen(false);
   };
 
   const scrollToTop = () => {
-    // Lenis is global, but for Logo we can fallback to window.scrollTo(0,0) 
-    // or let it happen naturally if href="#"
     window.scrollTo({ top: 0, behavior: 'auto' });
   };
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-brand-darker/90 backdrop-blur-md py-4 shadow-lg border-b border-brand-red/10' : 'bg-transparent py-6'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-300 will-change-transform ${isScrolled ? 'bg-brand-darker/90 backdrop-blur-md py-4 shadow-lg border-b border-brand-red/10' : 'bg-transparent py-6'}`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center gap-2 group cursor-pointer" onClick={scrollToTop}>
@@ -49,7 +55,6 @@ export const Navbar: React.FC = () => {
             <a 
               key={link.name} 
               href={link.href} 
-              // No manual click handler needed for desktop, global listener catches it
               className="text-sm font-semibold text-gray-300 hover:text-brand-red transition-colors uppercase tracking-wider cursor-pointer"
             >
               {link.name}

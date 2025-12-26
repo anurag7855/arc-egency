@@ -15,8 +15,8 @@ const reviews = [
   { brand: "Moda India", review: "From branding to performance marketing, Arc Studio delivered excellence. Highly recommended for apparel brands.", author: "Sneha G.", role: "Founder" },
 ];
 
-const ReviewCard: React.FC<{ data: typeof reviews[0] }> = ({ data }) => (
-  <div className="w-[350px] md:w-[400px] flex-shrink-0 p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm mx-4 hover:border-brand-red/40 transition-colors group relative">
+const ReviewCard: React.FC<{ data: typeof reviews[0] }> = React.memo(({ data }) => (
+  <div className="w-[300px] md:w-[400px] flex-shrink-0 p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm mx-4 hover:border-brand-red/40 transition-colors group relative">
     <Quote className="absolute top-6 right-6 text-white/5 w-10 h-10 group-hover:text-brand-red/10 transition-colors" />
     
     <div className="flex items-center gap-3 mb-6 relative z-10">
@@ -31,7 +31,7 @@ const ReviewCard: React.FC<{ data: typeof reviews[0] }> = ({ data }) => (
        </div>
     </div>
     
-    <p className="text-gray-300 text-sm leading-relaxed mb-6 italic opacity-90 relative z-10">"{data.review}"</p>
+    <p className="text-gray-300 text-sm leading-relaxed mb-6 italic opacity-90 relative z-10 line-clamp-4">"{data.review}"</p>
     
     <div className="flex items-center gap-3 border-t border-white/5 pt-4">
        <div className="w-8 h-8 rounded-full bg-brand-red/20 flex items-center justify-center text-xs font-bold text-brand-red border border-brand-red/20">
@@ -43,7 +43,7 @@ const ReviewCard: React.FC<{ data: typeof reviews[0] }> = ({ data }) => (
        </div>
     </div>
   </div>
-);
+));
 
 export const Testimonials: React.FC = () => {
   const firstRow = reviews.slice(0, 5);
@@ -67,34 +67,34 @@ export const Testimonials: React.FC = () => {
 
       <div className="relative flex flex-col gap-8">
          {/* Row 1 - Left to Right */}
-        <div className="flex overflow-hidden">
+        <div className="flex overflow-hidden relative z-10">
             <motion.div 
                 animate={{ x: [0, -1000] }} 
-                transition={{ repeat: Infinity, ease: "linear", duration: 25 }}
-                className="flex"
+                transition={{ repeat: Infinity, ease: "linear", duration: 35 }}
+                className="flex will-change-transform gpu-accelerated"
             >
-                {[...firstRow, ...firstRow, ...firstRow].map((review, idx) => (
+                {[...firstRow, ...firstRow, ...firstRow, ...firstRow].map((review, idx) => (
                     <ReviewCard key={`row1-${idx}`} data={review} />
                 ))}
             </motion.div>
         </div>
 
         {/* Row 2 - Right to Left */}
-        <div className="flex overflow-hidden">
+        <div className="flex overflow-hidden relative z-10">
             <motion.div 
                 animate={{ x: [-1000, 0] }}
-                transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
-                className="flex"
+                transition={{ repeat: Infinity, ease: "linear", duration: 40 }}
+                className="flex will-change-transform gpu-accelerated"
             >
-                {[...secondRow, ...secondRow, ...secondRow].map((review, idx) => (
+                {[...secondRow, ...secondRow, ...secondRow, ...secondRow].map((review, idx) => (
                     <ReviewCard key={`row2-${idx}`} data={review} />
                 ))}
             </motion.div>
         </div>
 
         {/* Gradient Fade for Marquee Edges */}
-        <div className="absolute inset-y-0 left-0 w-20 md:w-40 bg-gradient-to-r from-brand-dark to-transparent z-20 pointer-events-none"></div>
-        <div className="absolute inset-y-0 right-0 w-20 md:w-40 bg-gradient-to-l from-brand-dark to-transparent z-20 pointer-events-none"></div>
+        <div className="absolute inset-y-0 left-0 w-10 md:w-20 bg-gradient-to-r from-brand-dark to-transparent z-20 pointer-events-none"></div>
+        <div className="absolute inset-y-0 right-0 w-10 md:w-20 bg-gradient-to-l from-brand-dark to-transparent z-20 pointer-events-none"></div>
       </div>
     </section>
   );
